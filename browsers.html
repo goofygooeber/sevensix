@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeForce NOW - Quick Search</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+              nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(15, 15, 15, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(118, 185, 0, 0.3);
+            padding: 15px 40px;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 1px;
+        }
+
+        .nav-logo span {
+            color: #76b900;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 16px;
+            border-radius: 6px;
+        }
+
+        .nav-links a:hover {
+            color: #76b900;
+            background: rgba(118, 185, 0, 0.1);
+        }
+
+        .nav-links a.active {
+            color: #76b900;
+            background: rgba(118, 185, 0, 0.15);
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0d1b0d 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(118, 185, 0, 0.1) 0%, transparent 70%);
+            top: -200px;
+            right: -200px;
+            border-radius: 50%;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(118, 185, 0, 0.08) 0%, transparent 70%);
+            bottom: -150px;
+            left: -150px;
+            border-radius: 50%;
+        }
+
+        .search-container {
+            width: 90%;
+            max-width: 600px;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .logo {
+            margin-bottom: 50px;
+        }
+
+        .logo-text {
+            font-size: 56px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 40px rgba(118, 185, 0, 0.4);
+        }
+
+        .logo-text span {
+            color: #76b900;
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 16px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .search-wrapper {
+            position: relative;
+            width: 100%;
+            margin-bottom: 25px;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 22px 60px 22px 24px;
+            font-size: 18px;
+            background: rgba(20, 20, 20, 0.8);
+            border: 2px solid rgba(118, 185, 0, 0.3);
+            border-radius: 12px;
+            color: #ffffff;
+            outline: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .search-bar::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .search-bar:hover {
+            background: rgba(30, 30, 30, 0.9);
+            border-color: rgba(118, 185, 0, 0.5);
+        }
+
+        .search-bar:focus {
+            background: rgba(35, 35, 35, 0.95);
+            border-color: #76b900;
+            box-shadow: 0 0 0 4px rgba(118, 185, 0, 0.2),
+                        0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 22px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-icon:hover {
+            transform: translateY(-50%) scale(1.15);
+        }
+
+        .search-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: #76b900;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 0 6px rgba(118, 185, 0, 0.4));
+        }
+
+        .search-icon:hover svg {
+            stroke: #8ed600;
+            filter: drop-shadow(0 0 10px rgba(118, 185, 0, 0.7));
+        }
+
+        .official-button {
+            display: inline-block;
+            padding: 16px 40px;
+            background: linear-gradient(135deg, #76b900 0%, #5a8f00 100%);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(118, 185, 0, 0.3);
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .official-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(118, 185, 0, 0.5);
+            background: linear-gradient(135deg, #8ed600 0%, #76b900 100%);
+        }
+
+        .official-button:active {
+            transform: translateY(-1px);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 35px 0 30px 0;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(118, 185, 0, 0.2);
+        }
+
+        .divider span {
+            padding: 0 20px;
+        }
+
+        .tagline {
+            margin-top: 40px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 13px;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-logo">Six Seven <span>Games</span></div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="games.html">Game Library</a>
+            <a href="browsers.html" class="active">Browsers</a>
+        </div>
+    </nav>
+    <div class="search-container">
+        <div class="logo">
+            <div class="logo-text">Six Seven <span>Games</span></div>
+            <div class="subtitle">Quick Search</div>
+        </div>
+        
+        <div class="search-wrapper">
+            <input 
+                type="text" 
+                class="search-bar" 
+                placeholder="Search for anything..."
+                id="searchInput"
+            >
+            <div class="search-icon" onclick="performSearch()">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+            </div>
+        </div>
+
+        <div class="divider">
+            <span>or</span>
+        </div>
+
+        <button onclick="URLsearch('gointerstellar.app')" target="_blank" class="official-button">
+            Open Interstellar Proxy →
+        </button>
+
+        <div class="tagline">
+            Powered by NVIDIA RTX Technology
+        </div>
+    </div>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        function performSearch() {
+            const query = searchInput.value.trim();
+            if (query) {
+                console.log('Searching for:', query);
+                URLsearch(query)
+            }
+        }
+    </script>
+</body>
+</html>
+    <script>
+      function URLsearch(url) {
+        if (!url){
+            return
+        }
+        const popup = window.open("about:blank").document;
+
+        const favicon = popup.createElement("link");
+        const style = popup.createElement("style");
+        const object = popup.createElement("object");
+        
+        
+        popup.title = "Dashboard";
+        favicon.rel = "icon";
+        favicon.href = "https://cuhsd.instructure.com/favicon.ico";
+
+        style.innerHTML = `html, body {
+          margin: 0;
+          padding: 0;
+          height: 100%;
+          width: 100%;
+          overflow: hidden;
+        }
+        object {
+          width: 100%;
+          height: 100%;
+          border: none;
+        }`;
+
+        let thing;
+        if (url.includes("https://") || url.includes("http://")) {
+          thing = url;
+        } else {
+          thing = "https://" + url;
+        }
+
+        console.log(thing);
+        object.data = thing;
+
+        popup.head.appendChild(favicon);
+        popup.head.appendChild(style);
+        popup.body.appendChild(object);
+      }
+    </script>
+
+    <script>
+      const particles = document.getElementById("particles");
+
+      for (let i = 0; i < 30; i++) {
+        const p = document.createElement("div");
+        p.classList.add("particle");
+        p.style.left = Math.random() * 100 + "vw";
+        p.style.top = Math.random() * 100 + "vh";
+        const size = 6 + Math.random() * 10;
+        p.style.width = size + "px";
+        p.style.height = size + "px";
+        const floatDuration = 6 + Math.random() * 6;
+        p.style.animationDuration = `${floatDuration}s, ${
+          2 + Math.random() * 2
+        }s`;
+        p.style.animationDelay = `0s, ${Math.random() * 2}s`;
+        particles.appendChild(p);
+      }
+    </script>
+  </body>
+</html>
