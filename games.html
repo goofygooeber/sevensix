@@ -61,18 +61,33 @@
             color: #76b900;
             background: rgba(118, 185, 0, 0.15);
         }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0d1b0d 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-            padding: 20px;
-        }
+html {
+    overflow-x: hidden;
+}
+body::-webkit-scrollbar {
+    display: none;
+}
 
+/* Hide scrollbar for IE, Edge and Firefox */
+body {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0d1b0d 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    width: 100%;
+    max-width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 100px 20px 20px 20px;
+}
         body::before {
             content: '';
             position: absolute;
@@ -96,8 +111,8 @@
         }
 
         .search-container {
-            width: 90%;
-            max-width: 700px;
+            width: 150%;
+            max-width: 1000px;
             z-index: 1;
         }
 
@@ -203,7 +218,13 @@
             transition: all 0.25s ease;
             font-weight: 500;
         }
-
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid rgba(118, 185, 0, 0.2);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+        }
         .suggestion-chip:hover {
             background: rgba(118, 185, 0, 0.15);
             border-color: #76b900;
@@ -234,7 +255,9 @@
         }
 
         .all-games-section {
-            margin-top: 20px;
+        margin-top: 20px;
+        width: 100%;
+        margin: 20px auto 0 auto;
         }
 
         .all-games-title {
@@ -360,6 +383,10 @@
       <div class="all-games-section">
         <div class="all-games-grid" id="allGamesGrid"></div>
       </div>
+          <footer>
+            <p>Powered by NVIDIA RTX Technology | © 2024 GeForce NOW</p>
+            <p style="margin-top: 10px; font-size: 12px;">Cloud Gaming Platform - Play Anywhere, Anytime</p>
+        </footer>
     </div>
 
     <script>
@@ -2133,7 +2160,7 @@
           padding: 0;
           height: 100%;
           width: 100%;
-          overflow: hidden;
+          overflow: ;
         }
         object {
           width: 100%;
@@ -2154,5 +2181,6 @@
         popup.body.appendChild(object);
       }
     </script>
+
   </body>
 </html>
