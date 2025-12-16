@@ -340,7 +340,7 @@
     </div>
 
     <script>
-        function generateUUIDv4() {
+function generateUUIDv4() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
     const r = Math.random() * 16 | 0;
     const v = c === 'x' ? r : (r & 0x3 | 0x8);
@@ -361,14 +361,14 @@ function getUserUUID() {
   return uuid;
 }
 
-
+getUserUUID();
 
 
 document.addEventListener('keydown', (event) => {
   // Check for Control key (Windows/Linux) or Command key (Mac) + 
 
   // Check for Shift + S
-  if (event.key === "`" && event.key === '=' && event.key === "f") {
+  if (event.key === "`" && event.key === "f") {
       alert(getUserUUID());
   }
 });
